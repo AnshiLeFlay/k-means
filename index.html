@@ -3,6 +3,7 @@
 		<script type="text/javascript" src="kmeans.js"></script>
 		<script>
 		var test = [];
+		var dist = 30;
 		
 		test[0] = [1,1];
 		test[1] = [1,5];
@@ -46,6 +47,9 @@
 			var canvas = document.getElementById("coords");
 			if (canvas.getContext) {
 				var ctx = canvas.getContext("2d");
+
+				ctx.translate(30, 30);
+
 				/*
 				var scaleDistance = 30;
 				var kXY = 5;
@@ -91,10 +95,41 @@
 					for (var j = 0; j < pointsCluster[i].length; j++) {
 						x1 = parseInt(pointsCluster[i][j][0]);
 						y1 = parseInt(pointsCluster[i][j][1]);
-						drawPoint(ctx, x1, y1, colors[i], 2, 30);
+						drawPoint(ctx, x1, y1, colors[i], 2, dist);
 					}
 				}
 			}
+			
+			ctx.beginPath();
+			ctx.moveTo(0,0);
+			ctx.lineTo(0,ctx.canvas.width);
+			ctx.moveTo(0,0);
+			ctx.lineTo(ctx.canvas.height,0);
+			ctx.strokeStyle = 'black';
+			ctx.lineWidth = 1;
+			ctx.stroke();
+
+			ctx.fillStyle = "rgba(0,0,0,0.4)";
+			for (var s = 1; s < canvas.width/dist; s++)
+			{
+				ctx.moveTo(dist*s,0);
+				ctx.lineTo(dist*s,ctx.canvas.width);
+				ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+				ctx.font="14px";
+				ctx.fillText(s, dist*s-4, -4);
+			}
+			for (var s = 1; s < canvas.height/dist; s++)
+			{
+				ctx.moveTo(0, dist*s);
+				ctx.lineTo(ctx.canvas.height, dist*s);
+				ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+				ctx.font="14px";
+				ctx.fillText(s, -14, dist*s+4);
+			}
+
+			ctx.stroke();
+
+
 		}
 		</script>
 	</head>
